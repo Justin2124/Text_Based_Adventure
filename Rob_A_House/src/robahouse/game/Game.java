@@ -16,6 +16,7 @@ public class Game {
     private Item keyNumber2;
     private Item keyNumber3;
     private Item keyNumber4;
+    private String commandWord;
     
     public Game() {
         parser = new Parser();
@@ -37,12 +38,12 @@ public class Game {
     
     public void setupGame() {
         //environment of the game
-        frontYard = new Room("Front Yard", sFrontYard, "long description of the starting room");
-        hallway = new Room("Hallway", sHallway, "long description of the second room");
-        livingRoom = new Room("Living Room", sLivingRoom, "long description of the second room");
-        kitchen = new Room("Kitchen", sKitchen, "long description of the second room"); 
-        bedroom = new Room("Bedroom", sBedroom, "long description of the second room");
-        garage = new Room("Garage", sGarage, "long description of the second room");
+        frontYard = new Room("Front Yard", sFrontYard, lFrontYard);
+        hallway = new Room("Hallway", sHallway, lHallway);
+        livingRoom = new Room("Living Room", sLivingRoom, lLivingRoom);
+        kitchen = new Room("Kitchen", sKitchen, lKitchen); 
+        bedroom = new Room("Bedroom", sBedroom, lBedroom);
+        garage = new Room("Garage", sGarage, lGarage);
         
         keyNumber1 = new Item("Piece #1", "long description");
         keyNumber2 = new Item("Piece #2", "long description");
@@ -89,11 +90,11 @@ public class Game {
             processCommand(command);
             printInformation();   
         }
-        System.out.println("You lose");
+        System.out.println("You got caught!!! You Lost!!!");
     }
     
     private boolean checkWin() {
-        if (counter <= 25){
+        if (counter < 30){
             return true;
         }
         else {
@@ -101,21 +102,18 @@ public class Game {
         }
     }
     
-    /*public boolean checkItems() {
-        if (garage.hasItem().equals(piece4) && 
+    /*public void checkItems() {
+    	if (garage.getItem("piece4") && )
     }*/
     
     public void processCommand(Command command) {
-        String commandWord = command.getCommandWord().toLowerCase();
+        commandWord = command.getCommandWord().toLowerCase();
         
         switch(commandWord) {
-            case "speak":
-                System.out.println("you wanted me to speak this word, " + command.getSecondWord());
-                break;
             case "go":
                 goRoom(command);
                 break;
-            case "long":
+            case "room":
                 System.out.println(currentRoom.getLongDescription());
                 break;
             case "grab":
@@ -128,10 +126,38 @@ public class Game {
                 inspect(command);
                 break;
             case "help":
-                //help(command);
+                help(command);
                 break;
         }
         
+    }
+
+    
+    public void help(Command command) {
+    	if(!command.hasSecondWord()) {
+    		System.out.println("List of commands:" + " go, room, grab, drop, inspect");
+    	}
+    	else {
+        	commandWord = command.getSecondWord().toLowerCase();
+    		switch(commandWord) {
+    			case "go":
+    				System.out.println("This command allows you to go to different rooms. When you type go, type the name of the room after.");
+    				break;
+    			case "room":
+    				System.out.println("This command simply gives you a longer discription of the room");
+    				break;
+    			case "grab":
+    				System.out.println("This command allows you to grab different items. When you type grab, type the name of the item after.");
+    				break;
+    			case "drop":
+    				System.out.println("This command allows you to drop different items. When you type drop, type the name of the item after.");
+    				break;
+    			case "inspect":
+    				System.out.println("This command allows you to inspect different items. When you type inspect, type the name of the item after.");
+    				break;
+    				
+    		}
+    	}
     }
     
     public void inspect(Command command) {
@@ -170,6 +196,8 @@ public class Game {
         }
         else{
              player.setItem(item, itemToGrab);
+             counter++;
+             System.out.println("Move(s) left to unlock bedroom: " + (25 - counter));
         }
     }
     
@@ -186,6 +214,8 @@ public class Game {
         }
         else{
              currentRoom.setItem(playerItem, itemToDrop);
+             counter++;
+             System.out.println("Move(s) left to unlock bedroom: " + (25 - counter));
         }
     }
     
@@ -209,20 +239,20 @@ public class Game {
         else{
             currentRoom = nextRoom;
             counter++;
-            System.out.println("Counter: " + counter);
+            System.out.println("Move(s) left to unlock bedroom: " + (25 - counter));
         }
     }
     
     private String sFrontYard = "You are in the the front yard.";
-    private String lFrontYard;
+    private String lFrontYard = "You are in the front yard. There is a piece of a key hidden terribly in the bush.";
     private String sHallway = "You are in the hallway.";
-    private String lHallway;
+    private String lHallway = "You just entered the house and are now in the hallway leading to 3 rooms. However entering the bedroom will set off an trap which will result in your death. There was a picture frame with the number 3.";
     private String sLivingRoom = "You are in the living room";
-    private String lLivingRoom;
+    private String lLivingRoom = "You entered the living room. There was a picture frame with the number 2 and a piece of the key right on the couch.";
     private String sKitchen = "You are in the kitchen.";
-    private String lKitchen;
+    private String lKitchen = "You entered the kitchen. There was a picture frame with the number 4 and a piece of a key.";
     private String sBedroom = "You are in the bedroom";
-    private String lBedroom;
+    private String lBedroom = "You are in the bedroom and got rid of the traps. However there is a safe in the room with the words all engraved on it. ";
     private String sGarage = "You are in the garage.";
-    private String lGarage;
+    private String lGarage = "You entered the garage. There was a picture frame with the number 1 and a piece of a key right by the entrance to the garage.";
 }
