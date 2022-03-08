@@ -110,8 +110,8 @@ public class Game {
     }
     
     public boolean checkItems() {
-    	
     	if(garage.hasItem().equals(keyNumber1) && livingRoom.hasItem().equals(keyNumber2) && hallway.hasItem().equals(keyNumber3) && kitchen.hasItem().equals(keyNumber4)) {
+    		System.out.println("Congrats you unlocked the bedroom");grab
     		return true;
     	}
     	else {
