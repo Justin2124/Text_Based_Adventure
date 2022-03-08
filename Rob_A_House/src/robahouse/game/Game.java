@@ -24,9 +24,16 @@ public class Game {
     }
     
     public static void main(String[] args) {
+    	System.out.println("__________      ___.                ___ ___                             ");
+    	System.out.println("\\______   \\ ____\\_ |__   _____     /   |   \\  ____  __ __  ______ ____  ");
+    	System.out.println(" |       _//  _ \\| __ \\  \\__  \\   /    ~    \\/  _ \\|  |  \\/  ___// __ \\");
+    	System.out.println(" |    |   (  <_> ) \\_\\ \\  / __ \\_ \\    Y    (  <_> )  |  /\\___ \\\\  ___/");
+    	System.out.println(" |____|_  /\\____/|___  / (____  /  \\___|_  / \\____/|____//____  >\\___  >");
+    	System.out.println("       \\/           \\/       \\/         \\/                   \\/     \\/ ");
         Game game = new Game();
         game.setupGame();
         game.play();
+        
     }
     
     public void printInformation() {
@@ -102,9 +109,15 @@ public class Game {
         }
     }
     
-    /*public void checkItems() {
-    	if (garage.getItem("piece4") && )
-    }*/
+    public boolean checkItems() {
+    	
+    	if(garage.hasItem().equals(keyNumber1) && livingRoom.hasItem().equals(keyNumber2) && hallway.hasItem().equals(keyNumber3) && kitchen.hasItem().equals(keyNumber4)) {
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
+    }
     
     public void processCommand(Command command) {
         commandWord = command.getCommandWord().toLowerCase();
@@ -194,7 +207,7 @@ public class Game {
             System.out.println("You can't grab that");
             return;
         }
-        else{
+        else if(checkItems() == false){
              player.setItem(item, itemToGrab);
              counter++;
              System.out.println("Move(s) left to unlock bedroom: " + (25 - counter));
@@ -212,7 +225,7 @@ public class Game {
             System.out.println("You can't grab that");
             return;
         }
-        else{
+        else if(checkItems() == false){
              currentRoom.setItem(playerItem, itemToDrop);
              counter++;
              System.out.println("Move(s) left to unlock bedroom: " + (25 - counter));
@@ -236,10 +249,13 @@ public class Game {
             System.out.println("You can't go there");
             return;
         }
-        else{
+        else if(checkItems() == false){
             currentRoom = nextRoom;
             counter++;
             System.out.println("Move(s) left to unlock bedroom: " + (25 - counter));
+        }
+        else {
+        	
         }
     }
     
