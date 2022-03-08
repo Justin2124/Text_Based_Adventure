@@ -111,7 +111,7 @@ public class Game {
     
     public boolean checkItems() {
     	if(garage.hasItem().equals(keyNumber1) && livingRoom.hasItem().equals(keyNumber2) && hallway.hasItem().equals(keyNumber3) && kitchen.hasItem().equals(keyNumber4)) {
-    		System.out.println("Congrats you unlocked the bedroom");grab
+    		System.out.println("Congrats you unlocked the bedroom");
     		return true;
     	}
     	else {
@@ -249,6 +249,9 @@ public class Game {
             System.out.println("You can't go there");
             return;
         }
+	else if(checkItems() == false && currentRoom == bedroom) {
+		
+	}
         else if(checkItems() == false){
             currentRoom = nextRoom;
             counter++;
